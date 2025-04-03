@@ -44,7 +44,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'student',
+    'users',
     'drf_yasg',
+    'rest_framework_simplejwt',
+    # 'rest_framework_simplejwt.token_blacklist',  # For token blacklisting (optional)
+    'rest_framework.authtoken'
 ]
 
 MIDDLEWARE = [
@@ -56,6 +60,28 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+}
+
+SWAGGER_SETTINGS = {
+    "SECURITY_DEFINITIONS": {
+        "Bearer": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header",
+            "description": "Enter your token in the format: Bearer <token>"
+        }
+    },
+    'USE_SESSION_AUTH': False,  # Disables session authentication
+}
+
 
 ROOT_URLCONF = 'studentsdj.urls'
 
@@ -132,3 +158,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'users.UserCreds'  # Ensure this matches your app name and model

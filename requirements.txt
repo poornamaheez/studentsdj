@@ -3,3 +3,4 @@ mysqlclient
 python-dotenv
 djangorestframework
 drf-yasg
+djangorestframework-simplejwt
